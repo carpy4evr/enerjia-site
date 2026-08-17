@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enerjia — what's happening near you in San Francisco</title>
+<meta name="description" content="A map of everything happening in San Francisco — run clubs, open mics, night skates, figure drawing, trivia, street festivals. Free to browse. Built so showing up alone feels normal.">
+<!-- TODO(domain): set canonical + og:url once the domain is claimed -->
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Enerjia",
+  "description": "Map-first discovery of events in San Francisco.",
+  "areaServed": "San Francisco, CA"
+}
+</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="./"><span class="eps">ε</span> Enerjia</a>
+    <nav class="site">
+      <a href="women.html">Women</a>
+      <a href="singles.html">Singles Circuit</a>
+      <a href="newsletter/">Newsletter</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <h1>It's all around you.</h1>
+    <p class="lede">A live map of what's actually happening in San Francisco —
+    night skates, open mics, run clubs, figure drawing, trivia, street
+    festivals. Every event verified with the people who run it. Built on one
+    idea: showing up alone should feel normal.</p>
+    <!-- TODO(testflight): swap for the public TestFlight link, then the App Store link -->
+    <a class="cta" href="#newsletter">Get the weekly email</a>
+    <a class="cta secondary" href="#newsletter" style="margin-left:10px">iPhone app in beta</a>
+  </div>
+
+  <section>
+    <h2>This Friday, for example</h2>
+    <div class="picks">
+      <div class="pick">
+        <span class="when">Fridays · 9 PM · Ferry Building</span>
+        <h3>Friday Night Skate — the Midnight Rollers</h3>
+        <p>Ten miles through the city on wheels, DJ-soundtracked, every Friday
+        since 1989. Free. Helmet and lights required. Nobody skates it alone
+        for long.</p>
+      </div>
+      <div class="pick">
+        <span class="when">Fridays · 6 PM · 599 Valencia</span>
+        <h3>Communal Table at the Drawing Room</h3>
+        <p>One long table at a Mission gallery — draw, collage, or just hang.
+        Supplies provided, $5–20 sliding scale, all ages. Built for strangers
+        to make things next to each other.</p>
+      </div>
+      <div class="pick">
+        <span class="when">Fridays · 6 PM · 1890 Bryant</span>
+        <h3>Studio 203 Figure Drawing</h3>
+        <p>Drop-in session with a live model, $20, all levels. Two hours of
+        quiet focus with company — the introvert's Friday night out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>Open the map. Everything near you, tonight through next week, with real
+    times and real addresses — no ticket-site junk, no phantom listings. Every
+    event is checked against the organizer who runs it before it earns a pin.</p>
+    <p>Joining an event unlocks its group chat, so "is anyone else going?" has
+    an answer before you leave the house. That's the whole trick: the hard part
+    of going out alone was never the event — it was the first message.</p>
+  </section>
+
+  <section>
+    <h2>Spaces</h2>
+    <p>Same city, same events — your own room.</p>
+    <div class="spaces" style="margin-top:16px">
+      <a class="space" href="women.html">
+        <h3>Enerjia Women</h3>
+        <p>Every event on the map, with women-only chat rooms. Go together,
+        from the first message.</p>
+      </a>
+      <a class="space" href="singles.html">
+        <h3>The Singles Circuit</h3>
+        <p>Not a dating app. A calendar of places it's normal to talk to
+        strangers.</p>
+      </a>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <div class="signup">
+      <h2>The weekly email</h2>
+      <p>One send, Sunday evening: the week ahead, three picks worth leaving
+      the house for, and what you missed. Written by a person who checked
+      every listing.</p>
+      <!-- TODO(email): wire action to the chosen provider (Buttondown:
+           https://buttondown.com/api/emails/embed-subscribe/USERNAME).
+           Until then the button is disabled so nothing pretends to work. -->
+      <form onsubmit="return false">
+        <input type="email" placeholder="you@example.com" aria-label="Email address" disabled>
+        <button disabled title="Signups open shortly">Sign up</button>
+      </form>
+      <p class="fine">No spam, no selling your address, unsubscribe anytime.
+      Signups open shortly — the <a href="newsletter/">archive is already
+      readable</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><span class="wordmark" style="font-size:18px"><span class="eps">ε</span> Enerjia</span>
+    — San Francisco</p>
+    <p style="margin-top:8px">Events are verified against organizers but plans
+    change — check the source link before heading out.
+    <a href="newsletter/">Newsletter archive</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

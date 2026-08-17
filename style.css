@@ -1,0 +1,119 @@
+/* Enerjia web — same identity as the app: deep green #0F6E56, cream #F5F2ED,
+   serif display. One file, no framework, loads in one round trip. */
+
+:root {
+  --green: #0F6E56;
+  --green-dark: #0A4F3E;
+  --cream: #F5F2ED;
+  --ink: #1D1D1F;
+  --muted: #6B6B6E;
+  --gold: #D4A017;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+h1, h2, h3, .wordmark { font-family: Georgia, "Times New Roman", serif; }
+
+header.site {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(15, 110, 86, 0.15);
+}
+header.site .wrap {
+  display: flex; align-items: baseline; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+.wordmark { font-size: 26px; font-weight: 700; color: var(--green); text-decoration: none; }
+.wordmark .eps { font-style: italic; }
+nav.site a {
+  color: var(--muted); text-decoration: none; font-size: 15px; margin-left: 18px;
+}
+nav.site a:hover { color: var(--green); }
+
+.hero { padding: 72px 0 56px; }
+.hero h1 { font-size: 44px; line-height: 1.15; color: var(--green-dark); max-width: 560px; }
+.hero p.lede { font-size: 20px; color: var(--muted); margin-top: 18px; max-width: 520px; }
+
+.cta {
+  display: inline-block; margin-top: 28px; background: var(--green); color: #fff;
+  padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600;
+}
+.cta:hover { background: var(--green-dark); }
+.cta.secondary { background: transparent; color: var(--green); border: 1.5px solid var(--green); }
+
+section { padding: 40px 0; }
+section h2 { font-size: 28px; color: var(--green-dark); margin-bottom: 18px; }
+section p + p { margin-top: 12px; }
+
+.picks { display: grid; gap: 14px; margin-top: 8px; }
+.pick {
+  background: #fff; border-radius: 14px; padding: 18px 20px;
+  border: 1px solid rgba(15, 110, 86, 0.12);
+}
+.pick .when { font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--gold); }
+.pick h3 { font-size: 20px; margin: 4px 0 6px; }
+.pick p { color: var(--muted); font-size: 15.5px; }
+
+.spaces { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .spaces { grid-template-columns: 1fr 1fr; } }
+.space {
+  display: block; background: var(--green); color: #fff; border-radius: 16px;
+  padding: 24px; text-decoration: none;
+}
+.space:hover { background: var(--green-dark); }
+.space h3 { font-size: 22px; margin-bottom: 6px; }
+.space p { opacity: 0.85; font-size: 15px; }
+
+.signup {
+  background: #fff; border-radius: 16px; padding: 28px;
+  border: 1px solid rgba(15, 110, 86, 0.12);
+}
+.signup form { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.signup input[type="email"] {
+  flex: 1; min-width: 220px; padding: 12px 16px; font-size: 16px;
+  border: 1.5px solid rgba(15, 110, 86, 0.3); border-radius: 999px; background: var(--cream);
+}
+.signup button {
+  background: var(--green); color: #fff; border: 0; padding: 12px 24px;
+  border-radius: 999px; font-size: 16px; font-weight: 600; cursor: pointer;
+}
+.signup .fine { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+article.issue h1 { font-size: 34px; color: var(--green-dark); margin: 40px 0 8px; }
+article.issue h2 { font-size: 26px; color: var(--green-dark); margin: 32px 0 10px; }
+article.issue h3 { font-size: 20px; color: var(--ink); margin: 22px 0 6px; }
+article.issue p { margin: 12px 0; }
+article.issue ul { margin: 12px 0 12px 24px; }
+article.issue li { margin: 6px 0; }
+article.issue hr { border: 0; border-top: 1px solid rgba(15, 110, 86, 0.15); margin: 28px 0; }
+article.issue em { color: var(--muted); }
+.issue-date { color: var(--muted); font-size: 15px; }
+
+ul.archive { list-style: none; margin-top: 10px; }
+ul.archive li {
+  background: #fff; border: 1px solid rgba(15, 110, 86, 0.12);
+  border-radius: 12px; margin-bottom: 10px;
+}
+ul.archive a { display: block; padding: 16px 20px; text-decoration: none; color: var(--ink); }
+ul.archive a:hover { background: rgba(15, 110, 86, 0.05); }
+ul.archive .date { color: var(--muted); font-size: 14px; }
+
+footer.site {
+  border-top: 1px solid rgba(15, 110, 86, 0.15);
+  padding: 32px 0 48px; margin-top: 48px;
+  color: var(--muted); font-size: 14px;
+}
+footer.site a { color: var(--green); text-decoration: none; }
+
+.note {
+  background: rgba(212, 160, 23, 0.1); border: 1px solid rgba(212, 160, 23, 0.35);
+  border-radius: 10px; padding: 12px 16px; font-size: 14.5px; color: #7A5D0E;
+}

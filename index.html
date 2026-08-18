@@ -102,16 +102,19 @@
       <p>One send, Sunday evening: the week ahead, three picks worth leaving
       the house for, and what you missed. Written by a person who checked
       every listing.</p>
-      <!-- TODO(email): wire action to the chosen provider (Buttondown:
-           https://buttondown.com/api/emails/embed-subscribe/USERNAME).
-           Until then the button is disabled so nothing pretends to work. -->
-      <form onsubmit="return false">
-        <input type="email" placeholder="you@example.com" aria-label="Email address" disabled>
-        <button disabled title="Signups open shortly">Sign up</button>
+      <!-- Buttondown embed. A plain form POST on purpose: their endpoint
+           sometimes redirects new subscribers through CAPTCHA/validation,
+           which fetch()-style submits would break. Username must match the
+           Buttondown account exactly. -->
+      <form action="https://buttondown.com/api/emails/embed-subscribe/enerjia"
+            method="post" class="embeddable-buttondown-form">
+        <input type="email" name="email" placeholder="you@example.com"
+               aria-label="Email address" required>
+        <input type="hidden" value="1" name="embed">
+        <button type="submit">Sign up</button>
       </form>
       <p class="fine">No spam, no selling your address, unsubscribe anytime.
-      Signups open shortly — the <a href="newsletter/">archive is already
-      readable</a>.</p>
+      Past issues live in the <a href="newsletter/">archive</a>.</p>
     </div>
   </section>
 

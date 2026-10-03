@@ -31,6 +31,9 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Enerjia Newsletter</title>
 <meta name="description" content="{description}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&display=swap">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -64,6 +67,9 @@ INDEX = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Newsletter — Enerjia</title>
 <meta name="description" content="The Enerjia weekly: what's happening in San Francisco, three picks worth leaving the house for, written by a person who verified every listing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&display=swap">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>

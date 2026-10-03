@@ -1,13 +1,21 @@
 /* Enerjia web — same identity as the app: deep green #0F6E56, cream #F5F2ED,
-   serif display. One file, no framework, loads in one round trip. */
+   a serif for anything that speaks, and the jungle leaf from the app's launch
+   and login screens (JungleLeafView.swift), ported to SVG. One file, no
+   framework. Fraunces is loaded from Google Fonts by each page's <head>;
+   everything falls back to Georgia if it doesn't arrive. */
 
 :root {
   --green: #0F6E56;
   --green-dark: #0A4F3E;
   --cream: #F5F2ED;
-  --ink: #1D1D1F;
-  --muted: #6B6B6E;
+  --paper: #FFFDF9;
+  --mint: #E4EEE8;
+  --ink: #1B2420;
+  --muted: #5F6B64;
   --gold: #D4A017;
+  --gold-ink: #9A7410;
+  --line: rgba(15, 110, 86, 0.14);
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,66 +24,140 @@ body {
   background: var(--cream);
   color: var(--ink);
   font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;   /* leaves are allowed to bleed past the column */
 }
 
-.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-h1, h2, h3, .wordmark { font-family: Georgia, "Times New Roman", serif; }
-
-header.site {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(15, 110, 86, 0.15);
+/* Display type: Fraunces with its soft and "wonky" axes on. The wonk gives
+   the lowercase a little lean and curl — the fun lives in the letterforms,
+   not in extra decoration. Georgia has no such axes and ignores the setting. */
+h1, h2, h3, .wordmark {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-variation-settings: "opsz" 72, "SOFT" 100, "WONK" 1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
+h1 em, h2 em { font-style: italic; font-weight: 500; color: var(--gold-ink); }
+
+/* ---------- the leaf ---------- */
+.leaf { position: absolute; color: var(--green); pointer-events: none; overflow: visible;
+  transform: rotate(var(--r, 0deg)); transform-origin: 50% 100%; }
+.leaf .blade { fill: currentColor; opacity: 0.11; }
+.leaf .vein { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; opacity: 0.28; }
+.leaf.big .blade { opacity: 0.14; }
+.leaf.white { color: #fff; }
+.leaf.white .blade { opacity: 0.14; }
+.leaf.white .vein { opacity: 0.32; }
+.leafframe { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+@keyframes sway {
+  from { transform: rotate(calc(var(--r, 0deg) - 2.5deg)); }
+  to   { transform: rotate(calc(var(--r, 0deg) + 2.5deg)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .leaf { animation: sway 7s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+}
+
+/* ---------- header ---------- */
+header.site { padding: 20px 0; border-bottom: 1px solid var(--line); }
 header.site .wrap {
   display: flex; align-items: baseline; justify-content: space-between;
   flex-wrap: wrap; gap: 8px;
 }
-.wordmark { font-size: 26px; font-weight: 700; color: var(--green); text-decoration: none; }
-.wordmark .eps { font-style: italic; }
-nav.site a {
-  color: var(--muted); text-decoration: none; font-size: 15px; margin-left: 18px;
-}
+.wordmark { font-size: 28px; font-weight: 700; color: var(--green); text-decoration: none; }
+.wordmark .eps { font-style: italic; color: var(--gold-ink); }
+nav.site a { color: var(--muted); text-decoration: none; font-size: 15px; margin-left: 18px; }
 nav.site a:hover { color: var(--green); }
 
-.hero { padding: 72px 0 56px; }
-.hero h1 { font-size: 44px; line-height: 1.15; color: var(--green-dark); max-width: 560px; }
-.hero p.lede { font-size: 20px; color: var(--muted); margin-top: 18px; max-width: 520px; }
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 84px 0 64px; }
+.hero > :not(.leafframe):not(.pins) { position: relative; z-index: 1; }
+.eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+.hero h1 { font-size: clamp(42px, 8vw, 60px); line-height: 1.05; color: var(--green-dark); max-width: 520px; }
+.hero p.lede { font-size: 20px; color: var(--muted); margin-top: 20px; max-width: 500px; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+/* The jungle hero: copy beside the living map, both inside the leaf border.
+   One column on phones (words, then the map as its own panel); from 1000px
+   the copy takes the left 44% and the map has the rest to itself. */
+body.jungle .hero { padding: 36px 0 24px; }
+body.jungle .hero-grid { max-width: 1180px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr; gap: 28px; }
+body.jungle .hero .copy { max-width: 32rem; padding-top: 28px; }
+body.jungle .hero h1 { font-size: clamp(40px, 6.2vw, 62px); max-width: 11ch; }
+body.jungle .hero p.lede { font-size: 18px; max-width: 30rem; }
+body.jungle .mapstage { position: relative; height: clamp(380px, 62vh, 600px); border-radius: 20px; overflow: hidden; background: rgba(4, 24, 18, .35); box-shadow: 0 0 0 1px rgba(93,193,156,.18) inset, 0 24px 60px rgba(2, 20, 14, .45); }
+body.jungle .mapstage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+body.jungle .legend { position: absolute; left: 16px; bottom: 14px; z-index: 2; display: flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: .02em; color: rgba(243,239,228,.8); background: rgba(6,33,26,.7); padding: 7px 12px 7px 10px; border-radius: 999px; border: 1px solid rgba(93,193,156,.28); backdrop-filter: blur(4px); }
+body.jungle .legend i { width: 8px; height: 8px; border-radius: 50%; background: #5DC19C; box-shadow: 0 0 10px #5DC19C; flex: none; }
+body.jungle .legend b { color: #F3EFE4; font-variant-numeric: tabular-nums; }
+body.jungle .legend span { color: rgba(243,239,228,.55); }
+@media (max-width: 560px) { body.jungle .legend span { display: none; } }
+@media (min-width: 1000px) {
+  body.jungle .hero { padding: 48px 0 32px; }
+  body.jungle .hero-grid { grid-template-columns: minmax(0, 44%) minmax(0, 56%); gap: 40px; align-items: center; }
+  body.jungle .mapstage { height: clamp(520px, 72vh, 680px); }
+}
+
+/* Pins beside the headline: the map's pin, in miniature — emoji face, green ring. Decorative, but every one is a real weekly event. */
+.pins { position: absolute; right: -40px; top: 60px; width: 260px; height: 260px; pointer-events: none; z-index: 0; }
+.pin { position: absolute; display: grid; justify-items: center; gap: 2px; }
+.pin .face { width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 2.5px solid var(--green); display: grid; place-items: center; font-size: 24px; box-shadow: 0 6px 14px rgba(10, 79, 62, 0.16); }
+@keyframes bob { from { translate: 0 0; } to { translate: 0 -7px; } }
+@media (prefers-reduced-motion: no-preference) { .pin { animation: bob 3.6s ease-in-out infinite alternate; animation-delay: var(--d, 0s); } }
+@media (max-width: 760px) { .pins { right: -12px; top: 8px; width: 150px; height: 120px; opacity: 0.9; } .pin:nth-child(n+3) { display: none; } .hero h1, .hero p.lede { max-width: 72%; } }
 
 .cta {
-  display: inline-block; margin-top: 28px; background: var(--green); color: #fff;
+  display: inline-block; background: var(--green); color: #fff;
   padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600;
+  transition: transform .15s ease, background .15s ease;
 }
-.cta:hover { background: var(--green-dark); }
+.cta:hover { background: var(--green-dark); transform: translateY(-1px); }
 .cta.secondary { background: transparent; color: var(--green); border: 1.5px solid var(--green); }
+.cta.secondary:hover { background: var(--mint); }
+.cta:focus-visible, nav.site a:focus-visible, .space:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
+/* ---------- sections ---------- */
 section { padding: 40px 0; }
-section h2 { font-size: 28px; color: var(--green-dark); margin-bottom: 18px; }
+section h2 { font-size: 30px; color: var(--green-dark); margin-bottom: 18px; }
 section p + p { margin-top: 12px; }
 
 .picks { display: grid; gap: 14px; margin-top: 8px; }
 .pick {
-  background: #fff; border-radius: 14px; padding: 18px 20px;
-  border: 1px solid rgba(15, 110, 86, 0.12);
+  background: var(--paper); border-radius: 16px; padding: 18px 20px;
+  border: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
+.pick:has(.badge) { grid-template-columns: 52px 1fr; }
+.pick:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(10, 79, 62, 0.10); }
+.pick .badge { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 2.5px solid var(--green); display: grid; place-items: center; font-size: 26px; box-shadow: 0 4px 10px rgba(10, 79, 62, 0.12); rotate: -6deg; }
+.pick:nth-child(even) .badge { rotate: 6deg; }
 .pick .when { font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--gold); }
-.pick h3 { font-size: 20px; margin: 4px 0 6px; }
+  text-transform: uppercase; color: var(--gold-ink); }
+.pick h3 { font-size: 21px; margin: 4px 0 6px; }
 .pick p { color: var(--muted); font-size: 15.5px; }
 
 .spaces { display: grid; gap: 14px; grid-template-columns: 1fr; }
 @media (min-width: 560px) { .spaces { grid-template-columns: 1fr 1fr; } }
 .space {
-  display: block; background: var(--green); color: #fff; border-radius: 16px;
+  display: block; position: relative; overflow: hidden;
+  background: var(--green); color: #fff; border-radius: 16px;
   padding: 24px; text-decoration: none;
+  transition: transform .15s ease, background .15s ease;
 }
-.space:hover { background: var(--green-dark); }
-.space h3 { font-size: 22px; margin-bottom: 6px; }
-.space p { opacity: 0.85; font-size: 15px; }
+.space:hover { background: var(--green-dark); transform: translateY(-2px); }
+.space > :not(.leafframe) { position: relative; z-index: 1; }
+.space h3 { font-size: 23px; margin-bottom: 6px; }
+.space p { opacity: 0.86; font-size: 15px; }
 
 .signup {
-  background: #fff; border-radius: 16px; padding: 28px;
-  border: 1px solid rgba(15, 110, 86, 0.12);
+  position: relative; overflow: hidden;
+  background: var(--paper); border-radius: 16px; padding: 28px;
+  border: 1px solid var(--line);
 }
+.signup > :not(.leaf) { position: relative; z-index: 1; }
 .signup form { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
 .signup input[type="email"] {
   flex: 1; min-width: 220px; padding: 12px 16px; font-size: 16px;
@@ -85,35 +167,86 @@ section p + p { margin-top: 12px; }
   background: var(--green); color: #fff; border: 0; padding: 12px 24px;
   border-radius: 999px; font-size: 16px; font-weight: 600; cursor: pointer;
 }
+.signup button:hover { background: var(--green-dark); }
 .signup .fine { font-size: 13px; color: var(--muted); margin-top: 10px; }
 
-article.issue h1 { font-size: 34px; color: var(--green-dark); margin: 40px 0 8px; }
-article.issue h2 { font-size: 26px; color: var(--green-dark); margin: 32px 0 10px; }
+/* ---------- newsletter pages ---------- */
+article.issue h1 { font-size: 36px; color: var(--green-dark); margin: 40px 0 8px; }
+article.issue h2 { font-size: 27px; color: var(--green-dark); margin: 32px 0 10px; }
 article.issue h3 { font-size: 20px; color: var(--ink); margin: 22px 0 6px; }
 article.issue p { margin: 12px 0; }
 article.issue ul { margin: 12px 0 12px 24px; }
 article.issue li { margin: 6px 0; }
-article.issue hr { border: 0; border-top: 1px solid rgba(15, 110, 86, 0.15); margin: 28px 0; }
+article.issue hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
 article.issue em { color: var(--muted); }
 .issue-date { color: var(--muted); font-size: 15px; }
 
 ul.archive { list-style: none; margin-top: 10px; }
-ul.archive li {
-  background: #fff; border: 1px solid rgba(15, 110, 86, 0.12);
-  border-radius: 12px; margin-bottom: 10px;
-}
+ul.archive li { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
 ul.archive a { display: block; padding: 16px 20px; text-decoration: none; color: var(--ink); }
-ul.archive a:hover { background: rgba(15, 110, 86, 0.05); }
+ul.archive a:hover { background: var(--mint); }
 ul.archive .date { color: var(--muted); font-size: 14px; }
 
+/* ---------- footer ---------- */
 footer.site {
-  border-top: 1px solid rgba(15, 110, 86, 0.15);
-  padding: 32px 0 48px; margin-top: 48px;
+  position: relative; overflow: hidden;
+  border-top: 1px solid var(--line);
+  padding: 48px 0 48px; margin-top: 48px;
   color: var(--muted); font-size: 14px;
 }
+footer.site .canopy { position: absolute; left: 0; right: 0; top: 0; height: 70px; pointer-events: none; }
+footer.site .wrap { position: relative; z-index: 1; }
 footer.site a { color: var(--green); text-decoration: none; }
 
 .note {
   background: rgba(212, 160, 23, 0.1); border: 1px solid rgba(212, 160, 23, 0.35);
   border-radius: 10px; padding: 12px 16px; font-size: 14.5px; color: #7A5D0E;
 }
+
+/* ---------- the jungle landing page ----------
+   body.jungle (index only): a dark green ground that lightens toward the
+   centre, a fixed leaf border behind everything (see the generator at the
+   foot of index.html), and cream "paper" cards on top. */
+body.jungle {
+  color: #F3EFE4;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, #166A50 0%, #0F4F3B 35%, #0A3328 68%, #06211A 100%) fixed;
+}
+body.jungle #jungle { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+body.jungle #jungle svg { width: 100%; height: 100%; display: block; }
+body.jungle #jungle .blade { fill: currentColor; }
+body.jungle #jungle .stem { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+body.jungle #jungle .vein { fill: none; stroke: var(--vein, rgba(255,255,255,.18)); stroke-width: 1.1; stroke-linecap: round; }
+body.jungle #jungle .shadow { color: #04170F; opacity: .45; }
+body.jungle #jungle .shadow .vein { stroke: none; }
+body.jungle #jungle .layer.back { opacity: .9; }
+body.jungle #jungle .sway { transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes leafsway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }
+@media (prefers-reduced-motion: no-preference) and (min-width: 760px) {
+  body.jungle #jungle .sway { animation: leafsway 8s ease-in-out infinite alternate; }
+}
+body.jungle header.site, body.jungle main, body.jungle footer.site { position: relative; z-index: 1; }
+body.jungle header.site { border-bottom-color: rgba(243,239,228,.14); }
+body.jungle .wordmark { color: #F3EFE4; }
+body.jungle .wordmark .eps { color: #E8C56A; }
+body.jungle nav.site a { color: rgba(243,239,228,.72); }
+body.jungle nav.site a:hover { color: #F3EFE4; }
+body.jungle .eyebrow { color: #E8C56A; }
+body.jungle .hero h1 { color: #F3EFE4; }
+body.jungle h1 em, body.jungle h2 em { color: #E8C56A; }
+body.jungle .hero p.lede { color: rgba(243,239,228,.78); }
+body.jungle .cta { background: #F3EFE4; color: #0A4F3E; }
+body.jungle .cta:hover { background: #fff; }
+body.jungle .cta.secondary { background: transparent; color: #F3EFE4; border-color: rgba(243,239,228,.45); }
+body.jungle .cta.secondary:hover { background: rgba(243,239,228,.1); }
+body.jungle section h2 { color: #F3EFE4; }
+body.jungle section > p { color: rgba(243,239,228,.84); max-width: 60ch; }
+body.jungle .pick, body.jungle .signup { background: #F7F3EA; color: var(--ink); border-color: transparent; box-shadow: 0 12px 30px rgba(2, 20, 14, .35); }
+body.jungle .pick p, body.jungle .signup .fine { color: var(--muted); }
+body.jungle .pick:hover { box-shadow: 0 18px 36px rgba(2, 20, 14, .45); }
+body.jungle .space { background: #148A6B; box-shadow: 0 12px 30px rgba(2, 20, 14, .35); }
+body.jungle .space:hover { background: #19A078; }
+body.jungle .signup input[type="email"] { background: #fff; }
+body.jungle footer.site { border-top-color: rgba(243,239,228,.14); color: rgba(243,239,228,.6); }
+body.jungle footer.site a { color: #E8C56A; }
+body.jungle footer.site .wordmark { color: #F3EFE4; }
+body.jungle .cta:focus-visible, body.jungle nav.site a:focus-visible, body.jungle input:focus-visible, body.jungle button:focus-visible { outline-color: #E8C56A; }

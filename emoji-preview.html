@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pin emoji — set comparison</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<!-- Unlisted working page: the same five map-pin emoji drawn by five sets,
+     each inside the app's pin bubble, so the choice is made by eye. The
+     glyphs load straight from each project's repository or CDN (fine on
+     GitHub Pages; this page is not meant to be embedded anywhere stricter).
+     Licenses: Apple's are the system font (iOS only); Fluent Emoji — MIT;
+     Twemoji — CC-BY 4.0 (graphics); OpenMoji — CC BY-SA 4.0 (share-alike —
+     read it before shipping). Noto's SVGs moved paths upstream and are not
+     linked here. -->
+<style>
+  main.wrap { max-width: 1040px; }
+  h1 { font-size: 34px; color: var(--green-dark); margin: 48px 0 8px; }
+  p.lede { color: var(--muted); max-width: 60ch; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 24px; }
+  th { text-align: left; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 0 10px 4px; }
+  th.c, td.c { text-align: center; }
+  td { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 14px 10px; vertical-align: middle; }
+  td:first-child { border-left: 1px solid var(--line); border-radius: 16px 0 0 16px; font-weight: 600; width: 160px; }
+  td:last-child { border-right: 1px solid var(--line); border-radius: 0 16px 16px 0; }
+  td .lic { display: block; font-size: 12px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  /* the app's pin: time band, white bubble, green ring, tail */
+  .pin { display: inline-grid; justify-items: center; }
+  .pin .band { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: #fff; background: var(--ink); padding: 2px 7px; border-radius: 8px 8px 3px 3px; }
+  .pin .face { width: 54px; height: 54px; border-radius: 50%; background: #fff; border: 2.5px solid var(--green); display: grid; place-items: center; box-shadow: 0 4px 10px rgba(10,79,62,.14); font-size: 28px; line-height: 1; }
+  .pin .face img { width: 32px; height: 32px; display: block; }
+  .pin .tail { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid #fff; margin-top: -1px; filter: drop-shadow(0 2px 1px rgba(10,79,62,.1)); }
+  .dark td { background: #1D2A24; }
+  .dark td:first-child { color: #fff; }
+  .dark .pin .face { background: #242426; border-color: #5DC19C; }
+  .dark .pin .tail { border-top-color: #242426; }
+  .note { margin-top: 18px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="./"><span class="eps">ε</span> Enerjia</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Pin emoji, set by set</h1>
+  <p class="lede">Five pins the map actually uses — skate, trivia, drawing, happy hour, open mic — drawn by each candidate set inside the real pin bubble, on the day map and the night map. Apple's row is what the app shows today and renders only on Apple devices; the others ship as image assets.</p>
+
+  <table>
+    <thead><tr><th>Set</th><th class="c">🛼 skate</th><th class="c">🧠 trivia</th><th class="c">🎨 drawing</th><th class="c">🍻 happy hour</th><th class="c">🎤 open mic</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="note">
+    <p class="fine" style="color:var(--muted);font-size:14px">Picking a set means bundling ~130 glyphs as assets and rendering an image in the pin instead of text — about a day's work with a script that pulls just the glyphs the keyword table uses. Fluent 3D is my recommendation: it reads at pin size, has the most character, and is MIT-licensed.</p>
+  </div>
+</main>
+
+<script>
+  var GLYPHS = [
+    { native: "🛼", cp: "1f6fc", fluent: ["Roller skate", "roller_skate"] },
+    { native: "🧠", cp: "1f9e0", fluent: ["Brain", "brain"] },
+    { native: "🎨", cp: "1f3a8", fluent: ["Artist palette", "artist_palette"] },
+    { native: "🍻", cp: "1f37b", fluent: ["Clinking beer mugs", "clinking_beer_mugs"] },
+    { native: "🎤", cp: "1f3a4", fluent: ["Microphone", "microphone"] }
+  ];
+  var FLUENT = "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/";
+  var SETS = [
+    { name: "Apple (today)", lic: "system font · Apple devices only", img: null },
+    { name: "Fluent 3D", lic: "Microsoft · MIT", img: function (g) { return FLUENT + encodeURIComponent(g.fluent[0]) + "/3D/" + g.fluent[1] + "_3d.png"; } },
+    { name: "Fluent Flat", lic: "Microsoft · MIT", img: function (g) { return FLUENT + encodeURIComponent(g.fluent[0]) + "/Flat/" + g.fluent[1] + "_flat.svg"; } },
+    { name: "Twemoji", lic: "CC-BY 4.0", img: function (g) { return "https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/" + g.cp + ".svg"; } },
+    { name: "OpenMoji", lic: "CC BY-SA 4.0 (share-alike)", img: function (g) { return "https://cdn.jsdelivr.net/npm/openmoji@15.0.0/color/svg/" + g.cp.toUpperCase() + ".svg"; } }
+  ];
+  var BANDS = ["9–11 PM", "7–9 PM", "6–8 PM", "5–7 PM", "8–10 PM"];
+  function pin(set, g, i) {
+    var inner = set.img ? '<img src="' + set.img(g) + '" alt="' + g.native + '" loading="lazy">' : g.native;
+    return '<div class="pin"><span class="band">' + BANDS[i] + '</span><span class="face">' + inner + '</span><span class="tail"></span></div>';
+  }
+  var html = "";
+  [false, true].forEach(function (dark) {
+    SETS.forEach(function (set) {
+      html += '<tr class="' + (dark ? "dark" : "") + '"><td>' + set.name + (dark ? " · night" : "") + '<span class="lic">' + set.lic + '</span></td>';
+      GLYPHS.forEach(function (g, i) { html += '<td class="c">' + pin(set, g, i) + '</td>'; });
+      html += '</tr>';
+    });
+  });
+  document.getElementById("rows").innerHTML = html;
+</script>
+
+</body>
+</html>

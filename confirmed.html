@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You're in — Enerjia</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&display=swap">
+<link rel="stylesheet" href="style.css">
+<!-- Where Supabase sends people after they tap the confirmation link in the
+     sign-up email (Authentication → URL Configuration → Redirect URLs must
+     list this page). The app cannot receive that link itself, so this page
+     closes the loop: you're confirmed, now open the app and log in. Nothing
+     here reads the URL — the token in the fragment is consumed by Supabase
+     before the redirect, and we want no code touching it. -->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="./"><span class="eps">ε</span> Enerjia</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Email confirmed</p>
+    <h1>You're in.</h1>
+    <p class="lede">Your account is confirmed. Open Enerjia on your phone and
+    log in with the email and password you just created — the map is
+    waiting.</p>
+    <a class="cta" href="enerjia://auth/confirmed">Open Enerjia</a>
+    <p class="fine" style="margin-top:18px;color:var(--muted);font-size:14px">
+      Don't have the app on this device? The button does nothing here —
+      open the invite on your iPhone instead.</p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><a href="./">← Enerjia</a> — San Francisco</p>
+  </div>
+</footer>
+
+</body>
+</html>

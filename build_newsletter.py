@@ -86,7 +86,7 @@ INDEX = """<!DOCTYPE html>
 <main class="wrap">
 <div class="hero">
   <h1>The weekly email</h1>
-  <p class="lede">Every issue, archived. Sign-ups open shortly on the
+  <p class="lede">Every issue, archived. Sign up on the
   <a href="../index.html#newsletter">home page</a>.</p>
 </div>
 <ul class="archive">
@@ -159,11 +159,30 @@ def first_paragraph(md: str) -> str:
 def main():
     OUT.mkdir(exist_ok=True)
     issues = []
+    # The archive is what subscribers got. A date's `_buttondown_send.md` is
+    # that; the bare digest is the working file, and it carries internal notes
+    # ("Watch list — don't announce", seed status, copy notes) that must never
+    # publish. So: prefer the send version; fall back to the digest only when
+    # it is clean of internal markers; otherwise skip the date and say so.
+    INTERNAL = ("Watch list", "don't announce", "do not announce", "not seedable", "SEED STATUS")
     for path in sorted(DRAFTS.glob("????-??-??.md"), reverse=True):
         date = datetime.strptime(path.stem, "%Y-%m-%d")
-        md = path.read_text()
+        send = path.with_name(path.stem + "_buttondown_send.md")
+        if send.exists():
+            md = send.read_text()
+        else:
+            md = path.read_text()
+            if any(marker in md for marker in INTERNAL):
+                print(f"skip newsletter/{path.stem}.html  (digest has internal notes and no send version)")
+                continue
         title_m = re.search(r"^# (.+)$", md, re.M)
         title = title_m.group(1) if title_m else path.stem
+        # Two early issues were published from their digests, whose headings
+        # read "Content draft — week of 2026-08-17". The archive shows what
+        # a reader would call it.
+        wk = re.match(r"Content draft — week of (\d{4}-\d{2}-\d{2})", title)
+        if wk:
+            title = "The week of " + datetime.strptime(wk.group(1), "%Y-%m-%d").strftime("%B %-d")
         (OUT / f"{path.stem}.html").write_text(PAGE.format(
             title=html.escape(title),
             description=html.escape(first_paragraph(md)),

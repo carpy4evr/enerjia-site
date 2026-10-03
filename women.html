@@ -37,7 +37,7 @@
     <p class="lede">The whole city's calendar — run clubs, drawing tables,
     night skates, markets, trivia — with one difference: every event has a
     women-only chat room. Find who else is going before you go.</p>
-    <a class="cta" href="index.html#newsletter">Get the weekly email</a>
+    <a class="cta" href="#newsletter">Get the Women weekly</a>
   </div>
 
   <section>
@@ -80,6 +80,26 @@
         <p>Every neighborhood market on one map, with a room to find your
         people first.</p>
       </div>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <div class="signup">
+      <h2>The Women weekly</h2>
+      <p>Same Sunday email as everyone, plus the rooms: which of the week's
+      events have women going, who's walking over together, and one line
+      on staying safe. Written by a person who checked every listing.</p>
+      <!-- Buttondown embed, tagged "women" at the source so this list can be
+           sent its own issue. Plain POST on purpose (see index.html). -->
+      <form action="https://buttondown.com/api/emails/embed-subscribe/enerjia"
+            method="post" class="embeddable-buttondown-form">
+        <input type="email" name="email" placeholder="you@example.com"
+               aria-label="Email address" required>
+        <input type="hidden" name="tag" value="women">
+        <input type="hidden" value="1" name="embed">
+        <button type="submit">Sign up</button>
+      </form>
+      <p class="fine">No spam, no selling your address, unsubscribe anytime.</p>
     </div>
   </section>
 
